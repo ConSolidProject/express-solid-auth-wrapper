@@ -37,6 +37,7 @@ async function extractWebId(req, res, next) {
        next()
     } catch (error) {
        const message = `Error verifying Access Token via WebID: ${error}}`;
+       console.log(message);
        req.auth = {}
        req.auth.webId = undefined
        req.auth.clientId = undefined
