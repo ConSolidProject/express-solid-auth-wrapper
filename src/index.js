@@ -2,17 +2,36 @@ var { createSolidTokenVerifier } = require('@solid/access-token-verifier')
 var { SolidNodeClient } = require('solid-node-client')
 var solidOidcAccessTokenVerifier = createSolidTokenVerifier()
 
-function setSatellite(configuration) {
-    return async function (req, res, next) {
-        try {
-            const client = new SolidNodeClient();
-            const session = await client.login(configuration);
-            req.session = session
-            next()
-        } catch (error) {
-            console.log(`error`, error)
-            next(error)
+//function setSatellite(configuration) {
+//     return async function (req, res, next) {
+//         try {
+//             const client = new SolidNodeClient();
+//             const session = await client.login(configuration);
+//             req.session = session
+//             next()
+//         } catch (error) {
+//             console.log(`error`, error)
+//             next(error)
+//         }
+//     }
+// }
+
+async function setSatellite(req, res, next) {
+    try {
+        if (req.auth.webId) {
+            const { email, password, idp } = JSON.parse(process.env[req.auth.webId])
+            if (email && password) {
+                req.fetch = await generateFetch(email, password, idp)
+            } else {
+                req.fetch = fetch
+            }
+        } else {
+            req.fetch = fetch
         }
+        next()
+    } catch (error) {
+        console.log(`error`, error)
+        next(error)
     }
 }
 
