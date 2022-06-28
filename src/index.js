@@ -21,7 +21,6 @@ var solidOidcAccessTokenVerifier = createSolidTokenVerifier()
 function setSatellite(config) {
     return async function(req, res, next) {
         try {
-            console.log('config', config)
             const { email, password, idp } = config
             if (email && password) {
                 req.fetch = await generateFetch(email, password, idp)
