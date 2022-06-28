@@ -65,7 +65,7 @@ async function extractWebId(req, res, next) {
             req.auth = autch
             next()
          }
-    } else if (authorizationHeader.startsWith("Bearer")) {
+    } else if (authorizationHeader && authorizationHeader.startsWith("Bearer")) {
         try {
             const validation = await verifySolidAccessToken({header: authorizationHeader})
 
