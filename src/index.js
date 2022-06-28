@@ -3,6 +3,7 @@ const {generateFetch} = require('./auth')
 const {verifySolidAccessToken} = require('@solid/access-token-verifier/dist/algorithm/verifySolidAccessToken')
 var { SolidNodeClient } = require('solid-node-client')
 var solidOidcAccessTokenVerifier = createSolidTokenVerifier()
+const {fetch} = require('cross-fetch')
 
 // function setSatellite(configuration) {
 //     return async function (req, res, next) {
