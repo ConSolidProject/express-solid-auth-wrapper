@@ -1,8 +1,8 @@
-const {fetch} = require('cross-fetch');
-const { createDpopHeader, generateDpopKeyPair, buildAuthenticatedFetch} =require('@inrupt/solid-client-authn-core');
-const {v4} = require('uuid') 
+import fetch from 'cross-fetch';
+import { createDpopHeader, generateDpopKeyPair, buildAuthenticatedFetch} from '@inrupt/solid-client-authn-core';
+import {v4} from 'uuid' 
 
-async function generateFetch(email, password, idp) {
+export default async function generateFetch(email: string, password:string, idp: string) {
     try {
 
         if (!idp.endsWith("/")) idp += '/'
@@ -37,5 +37,3 @@ async function generateFetch(email, password, idp) {
         throw error
     }
 }
-
-module.exports = generateFetch

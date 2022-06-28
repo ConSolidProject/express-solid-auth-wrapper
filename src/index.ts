@@ -1,3 +1,5 @@
+import generateFetch from "./auth"
+
 var { createSolidTokenVerifier } = require('@solid/access-token-verifier')
 var { SolidNodeClient } = require('solid-node-client')
 var solidOidcAccessTokenVerifier = createSolidTokenVerifier()
@@ -16,23 +18,29 @@ var solidOidcAccessTokenVerifier = createSolidTokenVerifier()
 //     }
 // }
 
-async function setSatellite(req, res, next) {
-    try {
-        if (req.auth.webId) {
-            const { email, password, idp } = JSON.parse(process.env[req.auth.webId])
+interface IConfig {
+    email: string,
+    password: string,
+    idp: string
+}
+
+async function setSatellite(config: IConfig) {
+    return async function(req, res, next) {
+        try {
+            
+            const { email, password, idp } = config
             if (email && password) {
                 req.fetch = await generateFetch(email, password, idp)
             } else {
                 req.fetch = fetch
             }
-        } else {
-            req.fetch = fetch
+            next()
+        } catch (error) {
+            console.log(`error`, error)
+            next(error)
         }
-        next()
-    } catch (error) {
-        console.log(`error`, error)
-        next(error)
     }
+
 }
 
 async function extractWebId(req, res, next) {
