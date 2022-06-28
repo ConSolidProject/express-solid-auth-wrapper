@@ -9,7 +9,7 @@
   "author": "Jeroen Werbrouck",
   "license": "ISC",
   "dependencies": {
-    "@solid/access-token-verifier": "^1.0.1",
+    "@solid/access-token-verifier": "^2.0.0",
     "solid-node-client": "^2.1.0"
   }
 }
