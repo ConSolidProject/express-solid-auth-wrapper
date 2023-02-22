@@ -62,7 +62,7 @@ async function extractWebId(req, res, next) {
             console.log(message)
             auth.webId = undefined
             auth.clientId = undefined
-            req.auth = autch
+            req.auth = auth
             next()
          }
     } else if (authorizationHeader && authorizationHeader.startsWith("Bearer")) {
