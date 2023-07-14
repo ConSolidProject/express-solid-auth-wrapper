@@ -88,5 +88,6 @@ async function extractWebId(req, res, next) {
 
 module.exports = {
     setSatellite,
-    extractWebId
+    extractWebId,
+    generateFetch
 }
